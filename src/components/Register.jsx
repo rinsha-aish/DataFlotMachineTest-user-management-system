@@ -8,7 +8,29 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePassword = (password) => {
+    const passwordRegex =
+      /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{6,}$/;
+    return passwordRegex.test(password);
+  };
+
   const handleRegister = () => {
+    if (!validateEmail(email)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+
+    if (!validatePassword(password)) {
+      alert(
+        "Password must be at least 6 characters long and include letters, numbers, and symbols."
+      );
+      return;
+    }
     const users = JSON.parse(localStorage.getItem("users")) || [];
     const newUser = {
       username,
